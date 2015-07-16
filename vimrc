@@ -30,12 +30,10 @@ Plugin 'bronson/vim-trailing-whitespace'    " Fix trailing whitespace
 Plugin 'a.vim'                              " Alternate .c and .h files quickly
 
 " Plugin 'Lokaltog/vim-easymotion'  " vim motion on speed
-"
 " Plugin 'MarcWeber/vim-addon-mw-utils'
 " Plugin 'tomtom/tlib_vim'
 " Plugin 'garbas/vim-snipmate'
 " Plugin 'honza/vim-snippets'  " vim-snipmate default snippets
-"
 " Plugin 'mileszs/ack.vim'   " vim plugin for the Perl module/CLI script 'ack'
 " Plugin 'steffanc/cscopemaps.vim'
 call vundle#end()                           " required by Vundle
@@ -56,8 +54,9 @@ colorscheme solarized
 " -------------------------------------- "
 " --------------- Airline -------------- "
 " -------------------------------------- "
-let g:airline_powerline_fonts = 1
-" let g:airline#extensions#tabline#enabled = 1
+" let g:airline_powerline_fonts = 1         " automatically populate g:airline_symbols with powerline symbols
+let g:airline#extensions#tabline#enabled = 1
+set laststatus=2                            " Start vim-airline automatically
 " -------------------------------------- "
 " --------------- NERDtee -------------- "
 " -------------------------------------- "
@@ -127,7 +126,6 @@ set mouse=a                 " enable use of the mouse. Only works for certain te
 
 "set showcmd                " show command in bottom bar
 "set cmdheight=2            " Nuber of screen lines to use for the command-line
-"set laststatus=2           " the last window will always have a status line
 "set ruler                  " Show line and column numbers of the cursor position, seperated by a comma
 " -------------------------------------- "
 " ----------- Other Bindings ----------- "
