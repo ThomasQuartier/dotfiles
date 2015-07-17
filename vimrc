@@ -28,6 +28,7 @@ Plugin 'Raimondi/delimitMate'               " insert mode auto-completion for qu
 
 Plugin 'bronson/vim-trailing-whitespace'    " Fix trailing whitespace
 Plugin 'a.vim'                              " Alternate .c and .h files quickly
+Plugin 'christoomey/vim-tmux-navigator'     " Navigate seamlessly between vin and tmux splits
 
 " Plugin 'Lokaltog/vim-easymotion'  " vim motion on speed
 " Plugin 'MarcWeber/vim-addon-mw-utils'
