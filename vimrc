@@ -30,6 +30,8 @@ Plugin 'bronson/vim-trailing-whitespace'    " Fix trailing whitespace
 Plugin 'a.vim'                              " Alternate .c and .h files quickly
 Plugin 'christoomey/vim-tmux-navigator'     " Navigate seamlessly between vin and tmux splits
 
+Plugin 'tpope/vim-abolish'                  " Easily search for, substiture, and abbreviate multiple variants of a word
+
 " Plugin 'Lokaltog/vim-easymotion'  " vim motion on speed
 " Plugin 'MarcWeber/vim-addon-mw-utils'
 " Plugin 'tomtom/tlib_vim'
@@ -73,6 +75,7 @@ nmap <leader>gu :GundoToggle<cr>
 " --------------- Tagbar -------------- "
 " -------------------------------------- "
 nmap <leader>ta :TagbarToggle<cr>
+let g:tagbar_sort = 0
 " -------------------------------------- "
 " -------------- gitgutter ------------- "
 " -------------------------------------- "
@@ -101,7 +104,11 @@ nmap <leader>gg :GitGutterToggle<cr>
 " -------- trailing-whitespace --------- "
 " -------------------------------------- "
 nmap <leader>fw :FixWhitespace<cr>
-
+" -------------------------------------- "
+" ------------ DelimitMate ------------- "
+" -------------------------------------- "
+let g:snip_trigger_key = '<tab>'
+let g:snip_trigger_key_backwards = '<s-tab>'
 " -------------------------------------- "
 " ----------- GENERAL OPTIONS ---------- "
 " -------------------------------------- "
