@@ -31,6 +31,7 @@ Plugin 'a.vim'                              " Alternate .c and .h files quickly
 Plugin 'christoomey/vim-tmux-navigator'     " Navigate seamlessly between vin and tmux splits
 
 Plugin 'tpope/vim-abolish'                  " Easily search for, substiture, and abbreviate multiple variants of a word
+Plugin 'will133/vim-dirdiff'                " Vimdiff for directories
 
 " Plugin 'Lokaltog/vim-easymotion'  " vim motion on speed
 " Plugin 'MarcWeber/vim-addon-mw-utils'
