@@ -30,9 +30,11 @@ Plugin 'bronson/vim-trailing-whitespace'    " Fix trailing whitespace
 Plugin 'a.vim'                              " Alternate .c and .h files quickly
 Plugin 'christoomey/vim-tmux-navigator'     " Navigate seamlessly between vin and tmux splits
 
-Plugin 'tpope/vim-abolish'                  " Easily search for, substiture, and abbreviate multiple variants of a word
 Plugin 'will133/vim-dirdiff'                " Vimdiff for directories
+Plugin 'tomtom/tcomment_vim'
 
+" Plugin 'tpope/vim-abolish'                  " Easily search for, substiture, and abbreviate multiple variants of a word
+" Plugin 'scrooloose/nerdcommenter'                " Tree explorer
 " Plugin 'Lokaltog/vim-easymotion'  " vim motion on speed
 " Plugin 'MarcWeber/vim-addon-mw-utils'
 " Plugin 'tomtom/tlib_vim'
@@ -59,7 +61,12 @@ colorscheme solarized
 " --------------- Airline -------------- "
 " -------------------------------------- "
 " let g:airline_powerline_fonts = 1         " automatically populate g:airline_symbols with powerline symbols
+let g:airline_left_sep=''
+let g:airline_right_sep=''
+let g:airline_section_z=''
 let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tagbar#enabled = 1
+let g:airline#extensions#syntastic#enable = 1
 set laststatus=2                            " Start vim-airline automatically
 " -------------------------------------- "
 " --------------- NERDtee -------------- "
@@ -68,6 +75,7 @@ nmap <leader>ne :NERDTreeToggle<cr>
 " -------------------------------------- "
 " -------------- ctrlp ----------------- "
 " -------------------------------------- "
+let g:ctrlp_working_path_mode='a'
 " -------------------------------------- "
 " -------------- Gundo ----------------- "
 " -------------------------------------- "
@@ -85,19 +93,21 @@ nmap <leader>gg :GitGutterToggle<cr>
 " ----------- YouCompleteMe ------------ "
 " -------------------------------------- "
 "  let g:ycm_complete_in_comments = 0
-"  let g:ycm_register_as_syntastic_checker = 0 " This is needed when clang is not available: use syntastic as syntax checker
+" let g:ycm_register_as_syntastic_checker = 0 " This is needed when clang is not available: use syntastic as syntax checker
+let g:ycm_show_diagnostics_ui = 0
+nmap <leader>sy :SyntasticToggleMode<cr>
 " -------------------------------------- "
 " -------------- Syntastic ------------- "
 " -------------------------------------- "
-"  set statusline+=%#warningmsg#
-"  set statusline+=%{SyntasticStatuslineFlag()}
-"  set statusline+=%*
-"  let g:syntastic_c_checkers = ['gcc', 'make', 'splint']
-"  let g:syntastic_c_checkers = ['gcc']
-"  let g:syntastic_always_populate_loc_list = 1
-"  let g:syntastic_auto_loc_list = 1
-"  let g:syntastic_check_on_open = 1
-"  let g:syntastic_check_on_wq = 0
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+" let g:syntastic_c_checkers = ['gcc', 'make', 'splint']
+let g:syntastic_c_checkers = ['gcc']
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
 " -------------------------------------- "
 " ------------ DelimitMate ------------- "
 " -------------------------------------- "
