@@ -23,6 +23,7 @@ Plugin 'tpope/vim-fugitive'                 " Git wrapper so awesome, it should 
 Plugin 'airblade/vim-gitgutter'             " Shows git diff in the gutter (sign column) and stages revert hunks
 
 Plugin 'Valloric/YouCompleteMe'             " Code-completion engine: completer + syntax checker
+Plugin 'rdnetto/YCM-Generator'
 Plugin 'scrooloose/syntastic'               " static code analysis using external tools
 Plugin 'Raimondi/delimitMate'               " insert mode auto-completion for quotes, parents, brackets, etc.
 
