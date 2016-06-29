@@ -16,6 +16,7 @@ Plugin 'vim-airline/vim-airline'                  " Lean and mean status/tabline
 Plugin 'vim-airline/vim-airline-themes'
 
 Plugin 'scrooloose/nerdtree'                " Tree explorer
+Plugin 'renyard/vim-rangerexplorer'        " Vim Ranger Explorer
 Plugin 'kien/ctrlp.vim'                     " Fuzzy file buffer, mru, tag, etc finder
 Plugin 'sjl/gundo.vim'                      " Visualize the vim undo tree
 Plugin 'majutsushi/tagbar'                  " Display tags in a window ordered by scope
@@ -35,9 +36,10 @@ Plugin 'christoomey/vim-tmux-navigator'     " Navigate seamlessly between vin an
 Plugin 'will133/vim-dirdiff'                " Vimdiff for directories
 Plugin 'tomtom/tcomment_vim'
 
+Plugin 'Lokaltog/vim-easymotion'            " vim motion on speed
+
 " Plugin 'tpope/vim-abolish'                  " Easily search for, substiture, and abbreviate multiple variants of a word
 " Plugin 'scrooloose/nerdcommenter'                " Tree explorer
-" Plugin 'Lokaltog/vim-easymotion'  " vim motion on speed
 " Plugin 'MarcWeber/vim-addon-mw-utils'
 " Plugin 'tomtom/tlib_vim'
 " Plugin 'garbas/vim-snipmate'
@@ -59,6 +61,7 @@ set background=dark
 let g:solarized_termcolors=256
 set t_Co=256
 colorscheme solarized
+" colorscheme dracula
 " -------------------------------------- "
 " --------------- Airline -------------- "
 " -------------------------------------- "
@@ -78,6 +81,10 @@ set laststatus=2                            " Start vim-airline automatically
 " --------------- NERDtee -------------- "
 " -------------------------------------- "
 nmap <leader>ne :NERDTreeToggle<cr>
+" -------------------------------------- "
+" ----------- Ranger-explorer ---------- "
+" -------------------------------------- "
+nmap <leader>ra :RangerExplorer<cr>
 " -------------------------------------- "
 " -------------- ctrlp ----------------- "
 " -------------------------------------- "
@@ -178,6 +185,8 @@ map <C-h> <C-w>h
 map <C-j> <C-w>j
 map <C-k> <C-w>k
 map <C-l> <C-w>l
+set splitright
+set splitbelow
 
 " --- Fast saving
 nmap <leader>w :w!<cr>
@@ -204,4 +213,4 @@ map <S-tab> gT
 command W w !sudo tee % > /dev/null
 
 " --- Ignore compiled files
-set wildignore=*.o,*~,*.pyc,.git\*
+set wildignore=*.o,*~,*.pyc,.git\*,*_amd64
