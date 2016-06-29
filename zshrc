@@ -93,6 +93,7 @@ source $ZSH/oh-my-zsh.sh
 alias vi="vim"
 alias tmux="tmux -2"
 alias make="make -j 2"
+alias gitk="gitk --all --date-order"
 
 DISABLE_AUTO_TITLE=true
 
