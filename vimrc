@@ -74,6 +74,7 @@ let g:airline_powerline_fonts = 1         " automatically populate g:airline_sym
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#fnamemod = ':t'
 let g:airline#extensions#tabline#show_close_button = 0
+let g:airline#extensions#tabline#show_splits = 0
 let g:airline#extensions#tagbar#enabled = 1
 let g:airline#extensions#syntastic#enable = 1
 set laststatus=2                            " Start vim-airline automatically
@@ -89,6 +90,7 @@ nmap <leader>ra :RangerExplorer<cr>
 " -------------- ctrlp ----------------- "
 " -------------------------------------- "
 let g:ctrlp_working_path_mode='a'
+nmap <leader>p :CtrlPBuffer<cr>
 " -------------------------------------- "
 " -------------- Gundo ----------------- "
 " -------------------------------------- "
