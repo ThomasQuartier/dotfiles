@@ -1,7 +1,7 @@
 #!/bin/bash
 
 dir=~/.dotfiles
-olddir=~/dotfiles_old
+olddir=~/.dotfiles_old
 files="zshrc tmux.conf vimrc ycm_extra_conf.py"
 
 echo -n "Creating $olddir for backup of any existing dotfiles in ~ ..."
