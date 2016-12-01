@@ -31,6 +31,7 @@ Plugin 'Lokaltog/vim-easymotion'            " Vim motion on speed
 Plugin 'rhysd/vim-clang-format'             " Clang-formatting in vim
 Plugin 'octol/vim-cpp-enhanced-highlight'   " Enhanced cpp highlighting for c++ 11 / 14
 Plugin 'vim-scripts/DoxygenToolkit.vim'     " Simplify Doxygen documentation in C, C++, Python
+" Plugin 'scrooloose/syntastic'               " static code analysis using external tools
 
 " Plugin 'tpope/vim-abolish'                  " Easily search for, substiture, and abbreviate multiple variants of a word
 " Plugin 'scrooloose/nerdcommenter'           " Tree explorer
@@ -74,7 +75,7 @@ let g:airline#extensions#tabline#fnamemod = ':t'
 let g:airline#extensions#tabline#show_close_button = 0
 let g:airline#extensions#tabline#show_splits = 0
 let g:airline#extensions#tagbar#enabled = 1
-let g:airline#extensions#syntastic#enable = 1
+" let g:airline#extensions#syntastic#enable = 1
 set laststatus=2                            " Start vim-airline automatically
 " -------------------------------------- "
 " --------------- NERDtee -------------- "
@@ -105,12 +106,18 @@ nmap <leader>gg :GitGutterToggle<cr>
 " -------------------------------------- "
 " ----------- YouCompleteMe ------------ "
 " -------------------------------------- "
-"  let g:ycm_complete_in_comments = 0
-" let g:ycm_register_as_syntastic_checker = 0 " This is needed when clang is not available: use syntastic as syntax checker
-let g:ycm_show_diagnostics_ui = 0
+nmap <leader>ycmc :YcmCompleter<cr>
+nmap <leader>ycmd :YcmDiags<cr>
+let g:ycm_complete_in_comments = 0
+" make YCM work together with syntastic: turn of the YCM diagnostic display
+" features because it removes all other Syntastic checkers when set.
+" let g:ycm_show_diagnostics_ui = 0
 " make YCM compatible with UltiSnips (using supertab)
 let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
 let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
+" -------------------------------------- "
+" -------------- SuperTab -------------- "
+" -------------------------------------- "
 let g:SuperTabDefaultCompletionType = '<C-n>'
 " -------------------------------------- "
 " ------------- UltiSnips -------------- "
@@ -122,16 +129,17 @@ let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 " -------------------------------------- "
 " -------------- Syntastic ------------- "
 " -------------------------------------- "
-nmap <leader>sy :SyntasticToggleMode<cr>
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-" let g:syntastic_c_checkers = ['gcc', 'make', 'splint']
-let g:syntastic_c_checkers = ['gcc']
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
+" nmap <leader>sy :SyntasticToggleMode<cr>
+" " recommended settings from the help page
+" set statusline+=%#warningmsg#
+" set statusline+=%{SyntasticStatuslineFlag()}
+" set statusline+=%*
+" let g:syntastic_always_populate_loc_list = 1
+" let g:syntastic_auto_loc_list = 1
+" let g:syntastic_check_on_open = 1
+" let g:syntastic_check_on_wq = 0
+" " let g:syntastic_c_checkers = ['gcc', 'make', 'splint']
+" let g:syntastic_c_checkers = ['gcc']
 " -------------------------------------- "
 " -------- trailing-whitespace --------- "
 " -------------------------------------- "
@@ -222,4 +230,4 @@ map <S-tab> gT
 command W w !sudo tee % > /dev/null
 
 " --- Ignore compiled files
-set wildignore=*.o,*~,*.pyc,.git\*,*_amd64
+set wildignore=*.o,*~,*.pyc,.git\*,*_amd64,*.d,*_arm,_doc*
