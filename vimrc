@@ -32,6 +32,8 @@ Plugin 'rhysd/vim-clang-format'             " Clang-formatting in vim
 Plugin 'octol/vim-cpp-enhanced-highlight'   " Enhanced cpp highlighting for c++ 11 / 14
 Plugin 'vim-scripts/DoxygenToolkit.vim'     " Simplify Doxygen documentation in C, C++, Python
 " Plugin 'scrooloose/syntastic'               " static code analysis using external tools
+Plugin 'xolox/vim-misc'                     " required by vim-notes
+Plugin 'xolox/vim-notes'                    " make it easy to manage notes in vim
 
 " Plugin 'tpope/vim-abolish'                  " Easily search for, substiture, and abbreviate multiple variants of a word
 " Plugin 'scrooloose/nerdcommenter'           " Tree explorer
@@ -149,7 +151,6 @@ nmap <leader>fw :FixWhitespace<cr>
 " -------------------------------------- "
 " let g:snip_trigger_key = '<tab>'
 " let g:snip_trigger_key_backwards = '<s-tab>'
-
 " -------------------------------------- "
 " --------------- a.vim ---------------- "
 " -------------------------------------- "
@@ -157,7 +158,10 @@ nmap <leader>AA :A<cr>
 nmap <leader>AS :AS<cr>
 nmap <leader>AV :AV<cr>
 nmap <leader>AT :AT<cr>
-
+" -------------------------------------- "
+" ------------- vim-notes -------------- "
+" -------------------------------------- "
+let g:notes_directories = ['~/Notes']
 " -------------------------------------- "
 " ----------- GENERAL OPTIONS ---------- "
 " -------------------------------------- "
