@@ -56,6 +56,9 @@ plugins=(git)
 
 export PATH=$HOME/bin:/usr/local/bin:$PATH
 # export MANPATH="/usr/local/man:$MANPATH"
+#
+
+export TERM='xterm-256color'
 
 
 # You may need to manually set your language environment
@@ -67,6 +70,8 @@ export PATH=$HOME/bin:/usr/local/bin:$PATH
 # else
 #   export EDITOR='mvim'
 # fi
+
+export EDITOR='nvim'
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
@@ -90,7 +95,8 @@ fi
 
 source $ZSH/oh-my-zsh.sh
 
-alias vi="vim"
+alias vi="nvim"
+alias vim="nvim"
 alias tmux="tmux -2"
 alias make="make -j 2"
 alias gitk="gitk --all --date-order"
