@@ -2,7 +2,7 @@
 
 dir=~/.dotfiles
 olddir=~/.dotfiles_old
-files="zshrc tmux.conf vimrc ycm_extra_conf.py"
+files="zshrc tmux.conf ycm_extra_conf.py"
 
 echo -n "Creating $olddir for backup of any existing dotfiles in ~ ..."
 mkdir -p $olddir
@@ -18,3 +18,8 @@ for file in $files; do
     echo "Creating symlink to $file in home directory."
     ln -s $dir/$file ~/.$file
 done
+
+echo "Moving any existing dotfiles from ~ to $olddir"
+mv ~/.config/nvim/init.vim $olddir/
+echo "Creating symlink to init.vim in nvim directory."
+ln -s $dir/init.vim ~/.config/nvim/init.vim
