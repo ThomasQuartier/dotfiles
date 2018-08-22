@@ -19,6 +19,7 @@ for file in $files; do
     ln -s $dir/$file ~/.$file
 done
 
+mkdir ~/.config/nvim/
 echo "Moving any existing dotfiles from ~ to $olddir"
 mv ~/.config/nvim/init.vim $olddir/
 echo "Creating symlink to init.vim in nvim directory."
