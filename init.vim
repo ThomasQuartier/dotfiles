@@ -293,7 +293,7 @@ let g:ale_fixers = {
 " Fix automatically on save
 let g:ale_fix_on_save=0
 " Setup clang tidy
-let g:ale_cpp_clangtidy_executable = 'clang-tidy-5.0'
+let g:ale_cpp_clangtidy_executable = 'clang-tidy'
 let g:ale_cpp_clangtidy_checks = [
 \      '*',
 \      '-llvm*',
@@ -306,8 +306,8 @@ let g:ale_cpp_clangcheck_executable = 'clang-check-5.0'
 let g:ale_cpp_cppcheck_executable = 'cppcheck'
 let g:ale_cpp_cppcheck_options = '--enable=all --project=_build/compile_commands.json'
 " Setup
-let g:ale_cpp_clangformat_executable = 'clang-format-4.0'
-let g:ale_c_clangformat_executable = 'clang-format-4.0'
+let g:ale_cpp_clangformat_executable = 'clang-format'
+let g:ale_c_clangformat_executable = 'clang-format'
 
 "
 " vim-instant-markdown
