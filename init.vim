@@ -106,6 +106,10 @@ Plug 'w0rp/ale'
 " Snippets
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
+" Plantuml
+Plug 'aklt/plantuml-syntax'
+Plug 'tyru/open-browser.vim'
+Plug 'weirongxu/plantuml-previewer.vim'
 
 "" Include user's extra bundle
 if filereadable(expand("~/.config/nvim/local_bundles.vim"))
