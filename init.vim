@@ -37,6 +37,8 @@ Plug 'junegunn/fzf.vim'
 Plug 'majutsushi/tagbar'
 " Navigate seamlessly between vin and tmux splits
 Plug 'christoomey/vim-tmux-navigator'
+" vim plugin for tmux.conf
+Plug 'tmux-plugins/vim-tmux'
 
 "
 " Visual
@@ -48,6 +50,8 @@ Plug 'tomasr/molokai'
 " Status/tabline
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+" Restore FocusGained and FocusLost autocommand events in terminal vim.
+Plug 'tmux-plugins/vim-tmux-focus-events'
 
 "
 " Improved editing
@@ -66,16 +70,27 @@ Plug 'tomtom/tcomment_vim'
 Plug 'bronson/vim-trailing-whitespace'
 " Visualize the vim undo tree
 Plug 'sjl/gundo.vim'
-" A collection of language packs for Vim
-Plug 'sheerun/vim-polyglot'
+" A collection of language packs for Vim (only syntax for c/c++)
+" Plug 'sheerun/vim-polyglot'
 
 "
-" Writing
+" Snippets
 "
-" Distraction-free writing in Vim
-Plug 'junegunn/goyo.vim'
-" Hyperfocus-writing in Vim.
-Plug 'junegunn/limelight.vim'
+Plug 'Shougo/neosnippet.vim'
+Plug 'Shougo/neosnippet-snippets'
+Plug 'honza/vim-snippets'
+
+"
+" GIT
+"
+" A Git wrapper so awesome, it should be illegal
+Plug 'tpope/vim-fugitive'
+" Show added, modified and removed lines in sign column
+Plug 'mhinz/vim-signify'
+
+"
+" Writing Markdown/Rst
+"
 " Instant Markdown previews from VIm!
 Plug 'suan/vim-instant-markdown'
 " Powerful grammar checker using LanguageTool
@@ -84,31 +99,49 @@ Plug 'rhysd/vim-grammarous'
 Plug 'reedes/vim-wordy'
 " Rethinking Vim as a tool for writers
 Plug 'reedes/vim-pencil'
+" Plug 'Rykka/riv.vim'
+Plug 'gu-fan/InstantRst'
+" Disctraction-free writing in Vim
+Plug 'junegunn/goyo.vim'
+" Dependency for vim-markdown
+Plug 'godlygeek/tabular'
+" Syntax highlighting, matching rules and mappings for the original Markdown
+" and extensions.
+Plug 'plasticboy/vim-markdown'
+" Leightweight auto-correction in Vim
+Plug 'reedes/vim-litecorrect'
+" Correct common typos and misspellings as you type in Vim
+Plug 'panozzaj/vim-autocorrect'
 
 "
-" GIT
+" C++ / Python
 "
-" A Git wrapper so awesome, it should be illegal
-Plug 'tpope/vim-fugitive'
-" A Vim plugin which shows a git diff in the gutter (sign column) and stages/undoes hunks
-Plug 'airblade/vim-gitgutter'
-
-"
-" C++ development
-"
-" A code-completion engine for Vim
-Plug 'Valloric/YouCompleteMe', { 'do' : './install.py --clang-completer' }
-Plug 'rdnetto/YCM-Generator', { 'branch': 'stable'}
+" Dark powered asynchronous completion framework for neovim/Vim8
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+" Clang completer for deoplete.nvim that's faster than deoplete-clang
+Plug 'tweekmonster/deoplete-clang2'
+" deoplete.nvim for jedi
+Plug 'zchee/deoplete-jedi'
+" Language Server Protocol (LSP) support for vim and neovim.
+Plug 'autozimu/LanguageClient-neovim', {
+    \ 'branch': 'next',
+    \ 'do': 'bash install.sh',
+    \ }
+" Print documents in echo area
+Plug 'Shougo/echodoc.vim'
 " Simplify Doxygen documentation in C, C++, Python
 Plug 'vim-scripts/DoxygenToolkit.vim'
 " Async linting
 Plug 'w0rp/ale'
-" Snippets
-Plug 'SirVer/ultisnips'
-Plug 'honza/vim-snippets'
+
+"
 " Plantuml
+"
+" vim syntax file for plantuml
 Plug 'aklt/plantuml-syntax'
+" Dependency of plantuml-previewer
 Plug 'tyru/open-browser.vim'
+" vim/neovim plugin for plantuml
 Plug 'weirongxu/plantuml-previewer.vim'
 
 "" Include user's extra bundle
@@ -118,9 +151,8 @@ endif
 
 call plug#end()
 
-" Required:
+" Required
 filetype plugin indent on
-
 
 "*******************************************************************************
 " Basic settings
@@ -211,10 +243,6 @@ set gcr=a:blinkon0
 set scrolloff=3
 " Status bar
 set laststatus=2
-" Set statusline
-" if exists("*fugitive#statusline")
-"   set statusline+=%{fugitive#statusline()}
-" endif
 
 "*******************************************************************************
 " Mappings (not related to a plugin)
@@ -265,22 +293,6 @@ map <leader>js :%!python -m json.tool<cr>
 " Plugin settings
 "*******************************************************************************
 "
-" YouCompleteMe
-"
-let g:ycm_complete_in_comments = 1
-" Don't ask to load .ycm_extra_conf.py file
-let g:ycm_confirm_extra_conf = 0
-nmap <leader>ycm :YcmCompleter<Space>
-
-"
-" UltiSnips
-"
-let g:UltiSnipsExpandTrigger = '<C-j>'
-let g:UltiSnipsJumpForwardTrigger = '<C-j>'
-let g:UltiSnipsJumpBackwardTrigger = '<C-k>'
-let g:UltiSnipsSnippetDirectories = ['~/.config/nvim/UltiSnips', 'UltiSnips']
-
-"
 " ALE
 "
 " Set search paths for the compilation database (compile_commands.json)
@@ -288,7 +300,7 @@ let g:ale_c_build_dir_names = ['build', 'bin', '_build', '_build_amd64', '_build
 let g:ale_cpp_build_dir_names = ['build', 'bin', '_build', '_build_amd64', '_build_arm']
 " Set enabled linters for cpp
 let g:ale_linters = {
-\   'cpp': ['clangtidy', 'clangcheck', 'cppcheck'],
+\   'cpp': ['clangtidy', 'clangcheck', 'cppcheck', 'flawfinder'],
 \}
 " Set enabled fixers for cpp
 let g:ale_fixers = {
@@ -297,7 +309,6 @@ let g:ale_fixers = {
 " Fix automatically on save
 let g:ale_fix_on_save=0
 " Setup clang tidy
-let g:ale_cpp_clangtidy_executable = 'clang-tidy'
 let g:ale_cpp_clangtidy_checks = [
 \      '*',
 \      '-llvm*',
@@ -305,19 +316,26 @@ let g:ale_cpp_clangtidy_checks = [
 \      '-readability-braces-around-statements'
 \      ]
 " Setup clang-check
-let g:ale_cpp_clangcheck_executable = 'clang-check-5.0'
+let g:ale_cpp_clangcheck_executable = 'clang-check-6.0'
 " Setup cppcheck
 let g:ale_cpp_cppcheck_executable = 'cppcheck'
 let g:ale_cpp_cppcheck_options = '--enable=all --project=_build/compile_commands.json'
-" Setup
+" Setup clang-format
 let g:ale_cpp_clangformat_executable = 'clang-format'
 let g:ale_c_clangformat_executable = 'clang-format'
+
+nmap <leader>an :ALENext<cr>
+nmap <leader>ap :ALEPrevious<cr>
+nmap <leader>af :ALEFix<Space>
+nmap <leader>cl :ALEFix clang-format<cr>
+nmap <leader>fw :ALEFix remove_trailing_lines<cr>:ALEFix trim_whitespace<cr>
 
 "
 " vim-instant-markdown
 "
 " don't automatically start when opening a markdown file
 let g:instant_markdown_autostart = 0
+nmap <leader>md :InstantMarkdownPreview<cr>
 
 "
 " vim-airline
@@ -338,25 +356,12 @@ nmap <leader>ne :NERDTreeToggle<cr>
 nmap <leader>gu :GundoToggle<cr>
 
 "
-" GitGutter
+" vim-signify
 "
-nmap <leader>gg :GitGutterToggle<cr>
-nmap <leader>gn :GitGutterNextHunk<cr>
-nmap <leader>gp :GitGutterPrevHunk<cr>
-
-"
-" ALE
-"
-nmap <leader>al :ALENext<cr>
-nmap <leader>ap :ALEPrevious<cr>
-nmap <leader>af :ALEFix<Space>
-nmap <leader>cl :ALEFix clang-format<cr>
-nmap <leader>fw :ALEFix remove_trailing_lines<cr>:ALEFix trim_whitespace<cr>
-
-"
-" InstantMarkdown
-"
-nmap <leader>md :InstantMarkdownPreview<cr>
+nmap <leader>gj <plug>(signify-next-hunk)
+nmap <leader>gk <plug>(signify-prev-hunk)
+nmap <leader>gJ 9999<leader>gj
+nmap <leader>gK 9999<leader>gk
 
 "
 " FZF
@@ -419,3 +424,167 @@ nnoremap <silent> <leader>E :History<CR>
 nmap <leader>ta :TagbarToggle<cr>
 let g:tagbar_sort = 0
 
+"
+" Deoplete
+"
+let g:deoplete#enable_at_startup = 1
+
+"
+" LanguageClient-neovim
+"
+" Recommended settings from LanguageClient-neovim wiki
+function SetLSPShortcuts()
+  nnoremap <leader>ld :call LanguageClient#textDocument_definition()<CR>
+  nnoremap <leader>lr :call LanguageClient#textDocument_rename()<CR>
+  nnoremap <leader>lf :call LanguageClient#textDocument_formatting()<CR>
+  nnoremap <leader>lt :call LanguageClient#textDocument_typeDefinition()<CR>
+  nnoremap <leader>lx :call LanguageClient#textDocument_references()<CR>
+  nnoremap <leader>la :call LanguageClient_workspace_applyEdit()<CR>
+  nnoremap <leader>lc :call LanguageClient#textDocument_completion()<CR>
+  nnoremap <leader>lh :call LanguageClient#textDocument_hover()<CR>
+  nnoremap <leader>ls :call LanguageClient_textDocument_documentSymbol()<CR>
+  nnoremap <leader>lm :call LanguageClient_contextMenu()<CR>
+endfunction()
+
+augroup LSP
+  autocmd!
+  autocmd FileType cpp,c,sh call SetLSPShortcuts()
+augroup END
+
+set cmdheight=2
+let g:echodoc#enable_at_startup = 1
+let g:echodoc#type = 'signature'
+
+" Always draw the signcolumn.
+set signcolumn=yes
+
+" Recommended settings from ccls wiki
+let g:LanguageClient_serverCommands = {
+    \ 'c': ['/opt/ccls/Release/ccls', '--log-file=/tmp/cc.log'],
+    \ 'cpp': ['/opt/ccls/Release/ccls', '--log-file=/tmp/cc.log'],
+    \ 'cuda': ['/opt/ccls/Release/ccls', '--log-file=/tmp/cc.log'],
+    \ 'objc': ['/opt/ccls/Release/ccls', '--log-file=/tmp/cc.log'],
+    \ 'sh': ['bash-language-server', 'start'],
+    \ }
+
+let g:LanguageClient_loadSettings = 1 " Use an absolute configuration path if you want system-wide settings
+let g:LanguageClient_settingsPath = '/home/tquar/.config/nvim/settings.json'
+" https://github.com/autozimu/LanguageClient-neovim/issues/379 LSP snippet is not supported
+let g:LanguageClient_hasSnippetSupport = 0
+
+" See :help key-notation
+" Press Ale + j to go to definition
+" nn <silent> <M-j> :call LanguageClient#textDocument_definition()<cr>
+" Press Alt + k to find references
+" nn <silent> <M-k> :call LanguageClient#textDocument_references({'includeDeclaration': v:false})<cr>
+" Press K to show hover info
+" nn <silent> K :call LanguageClient#textDocument_hover()<cr>
+
+" textDocument / documentHighlight
+" augroup LanguageClient_config
+"   au!
+"   au BufEnter * let b:Plugin_LanguageClient_started = 0
+"   au User LanguageClientStarted setl signcolumn=yes
+"   au User LanguageClientStarted let b:Plugin_LanguageClient_started = 1
+"   au User LanguageClientStopped setl signcolumn=auto
+"   au User LanguageClientStopped let b:Plugin_LanguageClient_stopped = 0
+"   au CursorMoved * if b:Plugin_LanguageClient_started | sil call LanguageClient#textDocument_documentHighlight() | endif
+" augroup END
+
+" nn <silent> xh :call LanguageClient#findLocations({'method':'$ccls/navigate','direction':'L'})<cr>
+" nn <silent> xj :call LanguageClient#findLocations({'method':'$ccls/navigate','direction':'D'})<cr>
+" nn <silent> xk :call LanguageClient#findLocations({'method':'$ccls/navigate','direction':'U'})<cr>
+" nn <silent> xl :call LanguageClient#findLocations({'method':'$ccls/navigate','direction':'R'})<cr>
+" bases
+" nn <silent> xb :call LanguageClient#findLocations({'method':'$ccls/inheritance'})<cr>
+" bases of up to 3 levels
+" nn <silent> xB :call LanguageClient#findLocations({'method':'$ccls/inheritance','levels':3})<cr>
+" derived
+" nn <silent> xd :call LanguageClient#findLocations({'method':'$ccls/inheritance','derived':v:true})<cr>
+" derived of up to 3 levels
+" nn <silent> xD :call LanguageClient#findLocations({'method':'$ccls/inheritance','derived':v:true,'levels':3})<cr>
+
+" caller
+" nn <silent> xc :call LanguageClient#findLocations({'method':'$ccls/call'})<cr>
+" callee
+" nn <silent> xC :call LanguageClient#findLocations({'method':'$ccls/call','callee':v:true})<cr>
+
+" $ccls/member
+" nested classes / types in a namespace
+" nn <silent> xs :call LanguageClient#findLocations({'method':'$ccls/member','kind':2})<cr>
+" member functions / functions in a namespace
+" nn <silent> xf :call LanguageClient#findLocations({'method':'$ccls/member','kind':3})<cr>
+" member variables / variables in a namespace
+" nn <silent> xm :call LanguageClient#findLocations({'method':'$ccls/member'})<cr>
+
+" nn xx x
+
+"
+" UltiSnips
+"
+" let g:UltiSnipsExpandTrigger = '<C-j>'
+" let g:UltiSnipsJumpForwardTrigger = '<C-j>'
+" let g:UltiSnipsJumpBackwardTrigger = '<C-k>'
+" let g:UltiSnipsSnippetDirectories = ['~/.config/nvim/UltiSnips', 'UltiSnips']
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"
+" neosnippets
+"
+" Plugin key-mappings.
+" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
+imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+xmap <C-k>     <Plug>(neosnippet_expand_target)
+
+" SuperTab like snippets behavior.
+" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
+"imap <expr><TAB>
+" \ pumvisible() ? "\<C-n>" :
+" \ neosnippet#expandable_or_jumpable() ?
+" \    "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+\ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+
+" For conceal markers.
+if has('conceal')
+  set conceallevel=2 concealcursor=niv
+endif
+
+" Enable snipMate compatibility feature.
+let g:neosnippet#enable_snipmate_compatibility = 1
+
+" Tell Neosnippet about the other snippets
+let g:neosnippet#snippets_directory='~/.config/nvim/plugged/vim-snippets/snippets'
+
+"
+" vim-markdown
+"
+" Disable folding configuration
+let g:vim_markdown_folding_disabled = 1
+" Disable conceal reagardless of vim conceallevel
+let g:vim_markdown_conceal = 0
+" Set makrdown indent to 2 spaces
+let g:vim_markdown_new_list_item_indent = 2
+
+"
+" vim-pencil
+"
+augroup pencil
+  autocmd!
+  autocmd FileType markdown,mkd,text call pencil#init({'wrap': 'hard', 'autoformat': 1})
+augroup END
+
+"
+" vim-litecorrect
+"
+augroup litecorrect
+  autocmd!
+  autocmd FileType markdown,mkd,text call litecorrect#init()
+augroup END
+
+"
+" vim-autocorrect
+"
+augroup autocorrect
+  autocmd FileType markdown,mkd,text call litecorrect#init()
+augroup END
