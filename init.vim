@@ -44,7 +44,7 @@ Plug 'tmux-plugins/vim-tmux'
 " Visual
 "
 " display the indention levels with thin vertical lines
-Plug 'Yggdroot/indentLine'
+" Plug 'Yggdroot/indentLine'
 " Colorscheme
 Plug 'tomasr/molokai'
 " Status/tabline
@@ -99,7 +99,9 @@ Plug 'rhysd/vim-grammarous'
 Plug 'reedes/vim-wordy'
 " Rethinking Vim as a tool for writers
 Plug 'reedes/vim-pencil'
-" Plug 'Rykka/riv.vim'
+" Take notes in rst
+Plug 'Rykka/riv.vim'
+" Instant rst preview in browser
 Plug 'gu-fan/InstantRst'
 " Disctraction-free writing in Vim
 Plug 'junegunn/goyo.vim'
@@ -233,10 +235,11 @@ set t_Co=256
 set guioptions=egmrti
 set gfn=Monospace\ 10
 " IndentLine
-let g:indentLine_enabled = 1
-let g:indentLine_concealcursor = 0
-let g:indentLine_char = '┆'
-let g:indentLine_faster = 1
+" let g:indentLine_enabled = 1
+" let g:indentLine_setColors = 1
+" let g:indentLine_concealcursor = 0
+" let g:indentLine_char = '┆'
+" let g:indentLine_faster = 1
 " Disable the blinking cursor.
 set gcr=a:blinkon0
 " Keep always 3 screen lines above and below the cursor
@@ -289,25 +292,24 @@ nmap <silent> <leader>sv :so $MYVIMRC<CR>
 " Format json
 map <leader>js :%!python -m json.tool<cr>
 
+" This is a quick way to call search-and-replace on a current word
+nnoremap <leader>sr :%s/\<<C-r><C-w>\>//g<Left><Left>
+
 "*******************************************************************************
 " Plugin settings
 "*******************************************************************************
 "
 " ALE
 "
+let g:ale_lint_on_text_changed = 'never'
+let g:ale_lint_on_enter = 0
 " Set search paths for the compilation database (compile_commands.json)
 let g:ale_c_build_dir_names = ['build', 'bin', '_build', '_build_amd64', '_build_arm']
 let g:ale_cpp_build_dir_names = ['build', 'bin', '_build', '_build_amd64', '_build_arm']
 " Set enabled linters for cpp
 let g:ale_linters = {
-\   'cpp': ['clangtidy', 'clangcheck', 'cppcheck', 'flawfinder'],
+\   'cpp': ['clangtidy', 'cppcheck', 'flawfinder'],
 \}
-" Set enabled fixers for cpp
-let g:ale_fixers = {
-\   'cpp': ['clang-format'],
-\}
-" Fix automatically on save
-let g:ale_fix_on_save=0
 " Setup clang tidy
 let g:ale_cpp_clangtidy_checks = [
 \      '*',
@@ -316,13 +318,13 @@ let g:ale_cpp_clangtidy_checks = [
 \      '-readability-braces-around-statements'
 \      ]
 " Setup clang-check
-let g:ale_cpp_clangcheck_executable = 'clang-check-6.0'
+" let g:ale_cpp_clangcheck_executable = 'clang-check-6.0'
 " Setup cppcheck
-let g:ale_cpp_cppcheck_executable = 'cppcheck'
-let g:ale_cpp_cppcheck_options = '--enable=all --project=_build/compile_commands.json'
+" let g:ale_cpp_cppcheck_executable = 'cppcheck'
+" let g:ale_cpp_cppcheck_options = '--enable=all --project=_build/compile_commands.json'
 " Setup clang-format
-let g:ale_cpp_clangformat_executable = 'clang-format'
-let g:ale_c_clangformat_executable = 'clang-format'
+" let g:ale_cpp_clangformat_executable = 'clang-format'
+" let g:ale_c_clangformat_executable = 'clang-format'
 
 nmap <leader>an :ALENext<cr>
 nmap <leader>ap :ALEPrevious<cr>
@@ -338,6 +340,10 @@ let g:instant_markdown_autostart = 0
 nmap <leader>md :InstantMarkdownPreview<cr>
 
 "
+" InstantRst
+"
+nmap <leader>rst :InstantRst<cr>
+
 " vim-airline
 "
 let g:airline_theme = 'powerlineish'
@@ -432,6 +438,9 @@ let g:deoplete#enable_at_startup = 1
 "
 " LanguageClient-neovim
 "
+let g:LanguageClient_loggingFile =  expand('~/LanguageClient.log')
+let g:LanguageClient_serverStderr = expand('~/LanguageServer.log')
+
 " Recommended settings from LanguageClient-neovim wiki
 function SetLSPShortcuts()
   nnoremap <leader>ld :call LanguageClient#textDocument_definition()<CR>
@@ -546,9 +555,9 @@ smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
 \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
 
 " For conceal markers.
-if has('conceal')
-  set conceallevel=2 concealcursor=niv
-endif
+" if has('conceal')
+"   set conceallevel=2 concealcursor=niv
+" endif
 
 " Enable snipMate compatibility feature.
 let g:neosnippet#enable_snipmate_compatibility = 1
@@ -563,6 +572,10 @@ let g:neosnippet#snippets_directory='~/.config/nvim/plugged/vim-snippets/snippet
 let g:vim_markdown_folding_disabled = 1
 " Disable conceal reagardless of vim conceallevel
 let g:vim_markdown_conceal = 0
+" Disable Default Key Mappings
+let g:vim_markdown_no_default_key_mappings = 1
+" Let TOC autofit
+let g:vim_markdown_toc_autofit = 1
 " Set makrdown indent to 2 spaces
 let g:vim_markdown_new_list_item_indent = 2
 
