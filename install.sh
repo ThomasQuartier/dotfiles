@@ -2,7 +2,7 @@
 
 dir=~/.dotfiles
 olddir=~/.dotfiles_old
-files="zshrc tmux.conf ycm_extra_conf.py"
+files="zshrc tmux.conf"
 
 echo -n "Creating $olddir for backup of any existing dotfiles in ~ ..."
 mkdir -p $olddir

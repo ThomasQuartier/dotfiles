@@ -89,27 +89,39 @@ Plug 'tpope/vim-fugitive'
 Plug 'mhinz/vim-signify'
 
 "
-" Writing Markdown/Rst
+" Writing Markdown
 "
+" Syntax highlighting, matching rules and mappings for the original Markdown
+" and extensions.
+Plug 'plasticboy/vim-markdown'
+" Dependency for vim-markdown
+Plug 'godlygeek/tabular'
 " Instant Markdown previews from VIm!
 Plug 'suan/vim-instant-markdown'
-" Powerful grammar checker using LanguageTool
-Plug 'rhysd/vim-grammarous'
-" Uncover usage problems in your writing
-Plug 'reedes/vim-wordy'
-" Rethinking Vim as a tool for writers
-Plug 'reedes/vim-pencil'
+
+"
+" Writing Rst
+"
 " Take notes in rst
 Plug 'Rykka/riv.vim'
 " Instant rst preview in browser
 Plug 'gu-fan/InstantRst'
+
+"
+" General writing
+"
+" Rethinking Vim as a tool for writers
+Plug 'reedes/vim-pencil'
+
+"
+" Spell/Grammar checking
+"
 " Disctraction-free writing in Vim
 Plug 'junegunn/goyo.vim'
-" Dependency for vim-markdown
-Plug 'godlygeek/tabular'
-" Syntax highlighting, matching rules and mappings for the original Markdown
-" and extensions.
-Plug 'plasticboy/vim-markdown'
+" Powerful grammar checker using LanguageTool
+Plug 'rhysd/vim-grammarous'
+" Uncover usage problems in your writing
+Plug 'reedes/vim-wordy'
 " Leightweight auto-correction in Vim
 Plug 'reedes/vim-litecorrect'
 " Correct common typos and misspellings as you type in Vim
@@ -438,8 +450,8 @@ let g:deoplete#enable_at_startup = 1
 "
 " LanguageClient-neovim
 "
-let g:LanguageClient_loggingFile =  expand('~/LanguageClient.log')
-let g:LanguageClient_serverStderr = expand('~/LanguageServer.log')
+" let g:LanguageClient_loggingFile =  expand('~/LanguageClient.log')
+" let g:LanguageClient_serverStderr = expand('~/LanguageServer.log')
 
 " Recommended settings from LanguageClient-neovim wiki
 function SetLSPShortcuts()
@@ -469,10 +481,10 @@ set signcolumn=yes
 
 " Recommended settings from ccls wiki
 let g:LanguageClient_serverCommands = {
-    \ 'c': ['/opt/ccls/Release/ccls', '--log-file=/tmp/cc.log'],
-    \ 'cpp': ['/opt/ccls/Release/ccls', '--log-file=/tmp/cc.log'],
-    \ 'cuda': ['/opt/ccls/Release/ccls', '--log-file=/tmp/cc.log'],
-    \ 'objc': ['/opt/ccls/Release/ccls', '--log-file=/tmp/cc.log'],
+    \ 'c': ['~/.local/ccls/Release/ccls', '--log-file=/tmp/cc.log'],
+    \ 'cpp': ['~/.local/ccls/Release/ccls', '--log-file=/tmp/cc.log'],
+    \ 'cuda': ['~/.local/ccls/Release/ccls', '--log-file=/tmp/cc.log'],
+    \ 'objc': ['~/.local/ccls/Release/ccls', '--log-file=/tmp/cc.log'],
     \ 'sh': ['bash-language-server', 'start'],
     \ }
 
