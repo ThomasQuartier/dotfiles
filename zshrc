@@ -108,4 +108,6 @@ export PATH=~/.npm-global/bin:$PATH
 export PY_USER_BIN=$(python -c 'import site; print(site.USER_BASE + "/bin")')
 export PATH=$PY_USER_BIN:$PATH
 
+export PATH=$PATH:~/.local/ccls/Release
+
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

@@ -1,0 +1,11 @@
+[http]
+	sslVerify = false
+[user]
+	name = TODO
+	email = TODO
+[diff]
+  tool = vimdiff
+[difftool]
+  prompt = false
+[core]
+	excludesfile = /home/tquar/.gitignore_global
