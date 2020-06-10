@@ -97,6 +97,7 @@ Plug 'suan/vim-instant-markdown'
 Plug 'Rykka/riv.vim'
 " Instant rst preview in browser
 Plug 'gu-fan/InstantRst'
+Plug 'vim-voom/voom'
 
 "
 " General writing
@@ -140,12 +141,13 @@ Plug 'vim-scripts/DoxygenToolkit.vim'
 Plug 'w0rp/ale'
 " VimL completion for coc.nvim
 Plug 'Shougo/neco-vim'
+" Vim completion source for coc.nvim using neco-vim
 Plug 'neoclide/coc-neco'
+" Include completion source for coc.nvim using neoinclude.vim
 Plug 'Shougo/neoinclude.vim'
 Plug 'jsfaint/coc-neoinclude'
 " coc.nvim
 Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
-
 "
 " Snippets used by coc.nvim
 "
@@ -194,7 +196,7 @@ set softtabstop=2
 set shiftwidth=2
 set expandtab
 set smarttab
-autocmd FileType python setlocal ts=4 sw=4
+autocmd FileType python setlocal tabstop=4 softtabstop=4 shiftwidth=4
 " Round indent to multiple of 'shiftwidth' when indenting with > and <
 set shiftround
 "" Do smart autoindenting when starting a new line
@@ -206,9 +208,49 @@ set ignorecase
 set smartcase
 " Enable hidden buffers
 set hidden
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Directories for swp files
+" set nobackup
+" set noswapfile
+" Protect changes between writes. Default values of
+" updatecount (200 keystrokes) and updatetime
+" (4 seconds) are fine
+set swapfile
+" set directory^=~/.vim/swap//
+
+" protect against crash-during-write
+set writebackup
+" but do not persist backup after successful write
 set nobackup
-set noswapfile
+" use rename-and-write-new method whenever safe
+set backupcopy=auto
+" patch required to honor double slash at end
+" if has("patch-8.1.0251")
+" 	" consolidate the writebackups -- not a big
+" 	" deal either way, since they usually get deleted
+" 	set backupdir^=~/.vim/backup//
+" end
+
+" persist the undo tree for each file
+set undofile
+" set undodir^=~/.vim/undo//
+"
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Go to the last cursor location when a file is opened, unless this is a
+" git commit (in which case it's annoying)
+au BufReadPost *
+    \ if line("'\"") > 0 && line("'\"") <= line("$") && &filetype != "gitcommit" |
+        \ execute("normal `\"") |
+    \ endif
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" shortcuts for 3-way merge
+map <Leader>1 :diffget LOCAL<CR>
+map <Leader>2 :diffget BASE<CR>
+map <Leader>3 :diffget REMOTE<CR>
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Use better diff algorithm
+set diffopt+=internal,algorithm:patience
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 set fileformats=unix,dos,mac
 " Show current command at the bottom line of the screen
@@ -335,7 +377,9 @@ let g:ale_cpp_clangtidy_checks = [
 \      '*',
 \      '-llvm*',
 \      '-google*',
-\      '-readability-braces-around-statements'
+\      '-readability-braces-around-statements',
+\      '-fuchsia-default-arguments',
+\      '-hicpp-braces-around-statements'
 \      ]
 
 nmap <leader>an :ALENext<cr>
@@ -353,6 +397,8 @@ nmap <leader>md :InstantMarkdownPreview<cr>
 "
 " InstantRst
 "
+let g:instant_rst_browser = 'firefox'
+let g:instant_rst_port = 5676
 nmap <leader>rst :InstantRst<cr>
 
 " vim-airline
@@ -375,10 +421,10 @@ nmap <leader>gu :GundoToggle<cr>
 "
 " vim-signify
 "
-nmap <leader>gj <plug>(signify-next-hunk)
-nmap <leader>gk <plug>(signify-prev-hunk)
-nmap <leader>gJ 9999<leader>gj
-nmap <leader>gK 9999<leader>gk
+nmap <leader>gn <plug>(signify-next-hunk)
+nmap <leader>gp <plug>(signify-prev-hunk)
+nmap <leader>gN 9999<leader>gj
+nmap <leader>gP 9999<leader>gk
 
 "
 " FZF
@@ -458,10 +504,10 @@ let g:vim_markdown_new_list_item_indent = 2
 "
 " vim-pencil
 "
-augroup pencil
-  autocmd!
-  autocmd FileType markdown,mkd,text call pencil#init({'wrap': 'hard', 'autoformat': 1})
-augroup END
+" augroup pencil
+"   autocmd!
+"   autocmd FileType markdown,mkd,text,rst call pencil#init({'wrap': 'hard', 'autoformat': 1})
+" augroup END
 " Disable conceal regardless of vim conceallevel
 let g:pencil#conceallevel = 0
 " Set textwidh to 80 characters instead of the default 74

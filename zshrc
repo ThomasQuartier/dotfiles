@@ -102,6 +102,7 @@ export EDITOR='nvim'
 
 alias home="sudo sed -i '1 s/^/#/' /etc/apt/apt.conf"
 alias work="sudo sed -i '1 s/^#//' /etc/apt/apt.conf"
+alias vi="vim -u NONE"
 
 export PATH=~/.npm-global/bin:$PATH
 
