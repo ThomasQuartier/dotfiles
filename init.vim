@@ -401,6 +401,11 @@ let g:instant_rst_browser = 'firefox'
 let g:instant_rst_port = 5676
 nmap <leader>rst :InstantRst<cr>
 
+"
+" Riv
+"
+let g:riv_section_levels = '*=-^"~'
+
 " vim-airline
 "
 let g:airline_theme = 'powerlineish'
